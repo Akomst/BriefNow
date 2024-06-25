@@ -8,11 +8,11 @@ from config import rss_feeds, category_feeds
 # Load the model and tokenizer once
 @st.cache_resource
 def load_model():
-    tokenizer = AutoTokenizer.from_pretrained("t5-small ") 
+    tokenizer = AutoTokenizer.from_pretrained("t5-small") 
     #'/sdcard/download/quantized_onnx2')
    # model = ORTModelForSeq2SeqLM.from_pretrained('/sdcard/download/quantized_onnx2')
-   model = AutoModelForSeq2SeqLM.from_pretrained("t5-small ")
-    return tokenizer, model
+   model = AutoModelForSeq2SeqLM.from_pretrained("t5-small")
+   return tokenizer, model
 
 tokenizer, model = load_model()
 
