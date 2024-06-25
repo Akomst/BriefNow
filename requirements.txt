@@ -1,0 +1,6 @@
+streamlit
+feedparser
+transformers
+tensorflow
+beautifulsoup4
+requests
