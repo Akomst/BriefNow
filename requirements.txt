@@ -4,3 +4,4 @@ transformers
 tensorflow
 beautifulsoup4
 requests
+tf-keras
