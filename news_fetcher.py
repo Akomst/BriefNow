@@ -6,14 +6,15 @@ from transformers import AutoTokenizer, AutoModelWithLMHead  #TFAutoModelForSeq2
 from scraper import cached_scrape
 from config import rss_feeds, category_feeds
 
+# Login to Hugging Face
+login(token = api_key, add_to_git_credential=True ) 
 # Load the model and tokenizer once
 @st.cache_resource
 def load_model():
-    tokenizer = AutoTokenizer.from_pretrained("T5-base") 
+    tokenizer = AutoTokenizer.from_pretrained("akomst6/CoD_4_checkpoint") 
     # '/sdcard/download/quantized_onnx2')
     # model = ORTModelForSeq2SeqLM.from_pretrained('/sdcard/download/quantized_onnx2')
-   # model = TFAutoModelForSeq2SeqLM.from_pretrained("T5-base")
-    model=AutoModelWithLMHead.from_pretrained('T5-base')
+    model = TFAutoModelForSeq2SeqLM.from_pretrained("akomst6/CoD_4_checkpoint")
     return tokenizer, model
 
 tokenizer, model = load_model()
