@@ -1,7 +1,7 @@
 
-41;320;0cimport streamlit as st
+#import streamlit as st
 import feedparser
-from transformers import AutoTokenizer, AutoModelWithLMHead  #TFAutoModelForSeq2SeqLM 
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM 
 # from optimum.onnxruntime import ORTModelForSeq2SeqLM
 from scraper import cached_scrape
 from config import rss_feeds, category_feeds
@@ -14,7 +14,7 @@ def load_model():
     tokenizer = AutoTokenizer.from_pretrained("akomst6/CoD_4_checkpoint") 
     # '/sdcard/download/quantized_onnx2')
     # model = ORTModelForSeq2SeqLM.from_pretrained('/sdcard/download/quantized_onnx2')
-    model = TFAutoModelForSeq2SeqLM.from_pretrained("akomst6/CoD_4_checkpoint")
+    model = AutoModelForSeq2SeqLM.from_pretrained("akomst6/CoD_4_checkpoint")
     return tokenizer, model
 
 tokenizer, model = load_model()
@@ -33,8 +33,8 @@ def fetch_news_from_rss(feed_url):
 def generate_summary(text):
     try:
         input_text = f"summarize: {text}"
-        inputs = tokenizer.encode(input_text, return_tensors='pt', max_length=512, truncation=True)
-        outputs = model.generate(inputs, max_length=200)
+        inputs = tokenizer.encode(input_text, return_tensors='pt', max_length=1200, truncation=True)
+        outputs = model.generate(inputs, min_length=120, max_length=200)
         summary = tokenizer.decode(outputs[0], skip_special_tokens=True)
         return summary
     except Exception as e:
