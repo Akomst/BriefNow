@@ -1,4 +1,4 @@
-#import streamlit as st
+import streamlit as st
 import feedparser
 from huggingface_hub import login
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM 
@@ -10,6 +10,7 @@ import os
 # Login to Hugging Face
 api_key = os.getenv('api_key')
 login(token = api_key, add_to_git_credential=True ) 
+
 # Load the model and tokenizer once
 @st.cache_resource
 def load_model():
