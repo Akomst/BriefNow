@@ -1,6 +1,7 @@
-import streamlit as st
+
+41;320;0cimport streamlit as st
 import feedparser
-from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM 
+from transformers import AutoTokenizer, AutoModelWithLMHead  #TFAutoModelForSeq2SeqLM 
 # from optimum.onnxruntime import ORTModelForSeq2SeqLM
 from scraper import cached_scrape
 from config import rss_feeds, category_feeds
@@ -11,7 +12,8 @@ def load_model():
     tokenizer = AutoTokenizer.from_pretrained("T5-base") 
     # '/sdcard/download/quantized_onnx2')
     # model = ORTModelForSeq2SeqLM.from_pretrained('/sdcard/download/quantized_onnx2')
-    model = TFAutoModelForSeq2SeqLM.from_pretrained("T5-base")
+   # model = TFAutoModelForSeq2SeqLM.from_pretrained("T5-base")
+    model=AutoModelWithLMHead.from_pretrained('T5-base')
     return tokenizer, model
 
 tokenizer, model = load_model()
