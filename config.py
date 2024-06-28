@@ -22,8 +22,7 @@ rss_feeds = {
     "Sahara Reporters": "https://saharareporters.com/articles/rss-feed",
     "Yahoo": "http://rss.news.yahoo.com/rss/world",
     "BBC India":"http://feeds.bbci.co.uk/news/world/asia/india/rss.xml ",
-    "The Hindu": "http://www.thehindu.com/news/national/?service=rss",
-    "Times of India": "http://timesofindia.feedsportal.com/c/33039/f/533965/index.rss "
+    "The Hindu": "http://www.thehindu.com/news/national/?service=rss"
 }
 
 
@@ -53,8 +52,7 @@ category_feeds = {
     "Guardian"],
     
     "India News": [
-    "BBC India",
-    "Times of India", 
+    "BBC India", 
     "The Hindu"]
     
 }
