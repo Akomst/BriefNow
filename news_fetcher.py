@@ -1,8 +1,8 @@
 import streamlit as st
 import feedparser
 from huggingface_hub import login
-from transformers import AutoTokenizer, TFAutoModelForSeq2SeqLM 
-# from optimum.onnxruntime import ORTModelForSeq2SeqLM
+from transformers import AutoTokenizer 
+from optimum.onnxruntime import ORTModelForSeq2SeqLM
 from scraper import cached_scrape
 from config import rss_feeds, category_feeds
 import os
@@ -14,10 +14,8 @@ login(token = api_key, add_to_git_credential=True )
 # Load the model and tokenizer once
 @st.cache_resource
 def load_model():
-    tokenizer = AutoTokenizer.from_pretrained("akomst6/CoD_4_checkpoint") 
-    # '/sdcard/download/quantized_onnx2')
-    # model = ORTModelForSeq2SeqLM.from_pretrained('/sdcard/download/quantized_onnx2')
-    model = TFAutoModelForSeq2SeqLM.from_pretrained("akomst6/CoD_4_checkpoint")
+    tokenizer = AutoTokenizer.from_pretrained("akomst6/CoD_4_1_onnx") 
+    model = ORTModelForSeq2SeqLM.from_pretrained("akomst6/CoD_4_1_onnx")
     return tokenizer, model
 
 tokenizer, model = load_model()

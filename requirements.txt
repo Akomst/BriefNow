@@ -1,9 +1,8 @@
-streamlit
-feedparser
-transformers
-tensorflow
+streamlit==1.35.0
+feedparser==6.0.11
+transformers==4.39.3
 beautifulsoup4
-requests
-tf-keras
-huggingface_hub
-torch
+requests==2.31.0
+huggingface_hub==0.22.2
+optimum[onnxruntime]==1.18.1
+beautifulsoup4==4.12.2
