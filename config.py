@@ -5,7 +5,7 @@ rss_feeds = {
     "BBC": "http://feeds.bbci.co.uk/news/rss.xml",
     "CNN": "http://rss.cnn.com/rss/edition.rss",
     "Reuters": "http://feeds.reuters.com/reuters/topNews",
-    "The Guardian": "https://www.theguardian.com/world/rss",
+    "Guardian": "https://www.theguardian.com/world/rss",
     "Al Jazeera": "https://www.aljazeera.com/xml/rss/all.xml",
     "New York Times": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
     "The Guardian": "https://guardian.ng/feed/",
@@ -47,9 +47,8 @@ category_feeds = {
     "BBC", 
     "Yahoo",
     "CNN", 
-    "The Guardian", 
-    "New York Times",  
-    "Guardian"],
+    "Guardian", 
+    "New York Times"],
     
     "India News": [
     "BBC India", 
