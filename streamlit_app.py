@@ -5,7 +5,6 @@ from scraper import cached_scrape
 # Set page config at the very beginning
 st.set_page_config(page_title="BriefNow", layout="wide")
 
-# Custom CSS
 st.markdown("""
     <style>
     body {
@@ -56,48 +55,80 @@ st.markdown("""
         color: #555;
         margin-bottom: 1em;
     }
+    .action-icons {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: nowrap;  /* Prevent wrapping */
+    }
+    .action-icon {
+        margin-right: 15px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    .share-icon { color: #1DA1F2; }
+    .summary-icon { color: #4CAF50; }
+    .menu-icon { color: #333; }
+    .summary-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 0.5px;
+        padding: 15px;
+        margin-top: 0.5px;
+    }
+    .summary-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    .summary-text {
+        font-size: 1em;
+        line-height: 1.5;
+        color: #444;
+    }
     .pagination-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: 1em;
-        background-color: #ffcccb; /* Debug color for large screens */
     }
     .pagination-button {
-        min-width: 100px;
-        background-color: #d4edda; /* Debug color for large screens */
+        flex-basis: 45%;
+        margin: 0.5em;
     }
     .pagination-button button {
         width: 100%;
-        padding: 0.5em 1em; 
+        padding: 0.5em 1em;
     }
     @media (max-width: 600px) {
         .pagination-container {
-            background-color: yellow; /* Debug color for small screens */
-            justify-content: space-between; 
-            align-items: center; 
-            flex-direction: row; /* Ensure buttons are in a row */
+            flex-direction: row;
+            justify-content: space-between;
         }
         .pagination-button {
-            background-color: blue; /* Debug color for small screens */
-            flex: 1;
-            margin: 0 5px; /* Adjust margin for spacing */
+            flex-basis: 45%;
+            margin: 0.5em;
         }
         .pagination-button button {
             width: 100%;
-            padding: 0.5em 1em; 
+            padding: 4em 3em;
+        }
+        /* Added styles for button positioning  */
+        col1 .pagination-button,
+        col3 .pagination-button {
+            justify-content: flex-end;
+            color: red;
         }
     }
     </style>
 """, unsafe_allow_html=True)
 
-
-
-
 def display_article(article, source, page, index):
     with st.container():
         st.markdown(f'<div class="article-card">', unsafe_allow_html=True)
-        st.markdown(f'<h2 class="article-title">{article["title"]}</h2>', unsafe_allow_html=True)
+        # Make the article title clickable and open the link in a new tab
+        st.markdown(f'<a href="{article["link"]}" target="_blank"><h2 class="article-title">{article["title"]}</h2></a>', unsafe_allow_html=True)
         st.markdown(f'<p class="article-description">{article["description"][:200]}...</p>', unsafe_allow_html=True)
         
         st.markdown('<div class="action-icons">', unsafe_allow_html=True)
@@ -132,7 +163,7 @@ def display_paginated_news(source, search_term="", items_per_page=10):
     total_pages = (len(articles) - 1) // items_per_page + 1
     
     st.markdown('<div class="pagination-container">', unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1,2,1])
+    col1, col2, col3 = st.columns([1, 1, 1])
     with col1:
         st.markdown('<div class="pagination-button">', unsafe_allow_html=True)
         if st.button("Previous", key=f"prev_{source}_{page}", disabled=(page == 0)):
