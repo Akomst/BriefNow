@@ -28,7 +28,9 @@ def fetch_news_from_rss(feed_url):
     for entry in feed.entries:
         articles.append({
             'title': entry.title,
-            'description': entry.get('summary', 'No summary available.'),
+            'description': entry.get(
+                'summary',
+                'No summary available.'),
             'link': entry.link
         })
     return articles
@@ -36,9 +38,19 @@ def fetch_news_from_rss(feed_url):
 def generate_summary(text):
     try:
         input_text = f"summarize: {text}"
-        inputs = tokenizer.encode(input_text, return_tensors='pt', max_length=1200, truncation=True)
-        outputs = model.generate(inputs, min_length=120, max_length=200)
-        summary = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        inputs = tokenizer.encode(
+            input_text,
+            return_tensors='pt',
+            max_length=1200,
+            truncation=True)
+        outputs = model.generate(
+            inputs,
+            min_length=120,
+            max_length=200,
+            repetition_penalty=1.5)
+        summary = tokenizer.decode(
+            outputs[0],
+            skip_special_tokens=True)
         return summary
     except Exception as e:
         print(f"Error in generate_summary: {str(e)}")
