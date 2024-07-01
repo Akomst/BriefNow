@@ -1,6 +1,7 @@
 import streamlit as st
 from news_fetcher import get_articles_for_source, get_sources_for_category, generate_summary, categories
 from scraper import cached_scrape
+from auth import authenticate, logout
 
 # Set page config at the very beginning
 st.set_page_config(page_title="BriefNow", layout="wide")
@@ -59,7 +60,7 @@ st.markdown("""
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        flex-wrap: nowrap;  /* Prevent wrapping */
+        flex-wrap: nowrap;
     }
     .action-icon {
         margin-right: 15px;
@@ -196,6 +197,16 @@ def main():
 
     st.markdown('<div class="title">BriefNow</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Stay Informed, Stay Brief</div>', unsafe_allow_html=True)
+
+    # Login/Logout button
+    if 'user' not in st.session_state:
+        if st.sidebar.button("Login"):
+            authenticate()
+    else:
+        st.sidebar.write(f"Logged in as: {st.session_state['user']['name']}")
+        if st.sidebar.button("Logout"):
+            logout()
+            st.experimental_rerun()
 
     if selected_category == "All":
         st.info("Please select a specific category to view news.")
