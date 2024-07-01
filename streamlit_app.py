@@ -1,7 +1,7 @@
 import streamlit as st
+from auth0_component import login_button
 from news_fetcher import get_articles_for_source, get_sources_for_category, generate_summary, categories
 from scraper import cached_scrape
-from auth import authenticate, logout
 
 # Set page config at the very beginning
 st.set_page_config(page_title="BriefNow", layout="wide")
@@ -198,15 +198,15 @@ def main():
     st.markdown('<div class="title">BriefNow</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Stay Informed, Stay Brief</div>', unsafe_allow_html=True)
 
-    # Login/Logout button
-    if 'user' not in st.session_state:
-        if st.sidebar.button("Login"):
-            authenticate()
+    clientId = "Z9cEMfO3ejpW966IB6ISKlHDWAU3aKA5" #st.secrets["clientId"]
+    domain = "dev-btdcd2ttscxcsa6a.us.auth0.com" #st.secrets["domain"]
+
+    user_info = login_button(clientId, domain=domain)
+    
+    if user_info:
+        st.sidebar.success(f"Logged in as {user_info['name']}")
     else:
-        st.sidebar.write(f"Logged in as: {st.session_state['user']['name']}")
-        if st.sidebar.button("Logout"):
-            logout()
-            st.experimental_rerun()
+        st.sidebar.info("Please log in to access more features.")
 
     if selected_category == "All":
         st.info("Please select a specific category to view news.")
