@@ -1,6 +1,7 @@
 import streamlit as st
-from auth0_component import login_button
+from streamlit_auth0 import login_button
 from news_fetcher import get_articles_for_source, get_sources_for_category, generate_summary, categories
+from pymongo import MongoClient
 from scraper import cached_scrape
 
 # Set page config at the very beginning
@@ -125,16 +126,50 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-def display_article(article, source, page, index):
+username = st.secrets["mongodb_username"]
+password = st.secrets["mongodb_password"]
+
+# Construct the Mongo URI
+MONGO_URI = f"mongodb+srv://{username}:{password}@cluster0.l1n4uzh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+# Connect to MongoDB
+client = MongoClient(MONGO_URI)
+db = client["BriefNow"]
+bookmarks_collection = db["bookmarks"]
+
+
+def bookmark_article(user_info, article):
+    if user_info:
+        bookmark = {
+            "user_id": user_info["sub"],
+            "article": article
+        }
+        bookmarks_collection.update_one(
+            {"user_id": user_info["sub"], "article.link": article["link"]},
+            {"$set": bookmark},
+            upsert=True
+        )
+        st.success("Article bookmarked!")
+    else:
+        st.info("Please log in to bookmark articles.")
+
+def get_bookmarked_articles(user_info):
+    if user_info:
+        bookmarks = bookmarks_collection.find({"user_id": user_info["sub"]})
+        return [bookmark["article"] for bookmark in bookmarks]
+    return []
+
+def display_article(article, source, page, index, user_info):
     with st.container():
         st.markdown(f'<div class="article-card">', unsafe_allow_html=True)
-        # Make the article title clickable and open the link in a new tab
         st.markdown(f'<a href="{article["link"]}" target="_blank"><h2 class="article-title">{article["title"]}</h2></a>', unsafe_allow_html=True)
         st.markdown(f'<p class="article-description">{article["description"][:200]}...</p>', unsafe_allow_html=True)
         
         st.markdown('<div class="action-icons">', unsafe_allow_html=True)
         st.markdown('<span class="action-icon share-icon" title="Share">&#128279;</span>', unsafe_allow_html=True)
-        if st.button("Summary", key=f"summary_{source}_{page}_{index}", help="Generate a summary of the article"):
+        summary_key = f"summary_{source}_{page}_{index}_{article['link']}"
+        bookmark_key = f"bookmark_{source}_{page}_{index}_{article['link']}"
+        if st.button("Summary", key=summary_key, help="Generate a summary of the article"):
             with st.spinner('Generating summary...'):
                 full_text = cached_scrape(article['link'])
                 summary = generate_summary(full_text)
@@ -142,12 +177,15 @@ def display_article(article, source, page, index):
                 st.markdown('<div class="summary-title">Article Summary</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="summary-text">{summary}</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
+        if st.button("Bookmark", key=bookmark_key, help="Bookmark this article"):
+            bookmark_article(user_info, article)
         st.markdown('<span class="action-icon menu-icon" title="More options">&#8942;</span>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-def display_paginated_news(source, search_term="", items_per_page=10):
+
+def display_paginated_news(source, search_term, items_per_page, user_info):
     articles = get_articles_for_source(source, search_term)
     
     # Initialize session state for pagination
@@ -159,7 +197,7 @@ def display_paginated_news(source, search_term="", items_per_page=10):
     end = start + items_per_page
     
     for index, article in enumerate(articles[start:end], start=start):
-        display_article(article, source, page, index)
+        display_article(article, source, page, index, user_info)
     
     total_pages = (len(articles) - 1) // items_per_page + 1
     
@@ -181,14 +219,14 @@ def display_paginated_news(source, search_term="", items_per_page=10):
         st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-def display_news_for_category(category):
+def display_news_for_category(category, user_info):
     sources = get_sources_for_category(category)
     search_term = st.text_input("Search headlines:", key=f"search_{category}")
     
     tabs = st.tabs(sources)
     for i, source in enumerate(sources):
         with tabs[i]:
-            display_paginated_news(source, search_term)
+            display_paginated_news(source, search_term, 10, user_info)
 
 def main():
     st.sidebar.title("BriefNow")
@@ -198,20 +236,25 @@ def main():
     st.markdown('<div class="title">BriefNow</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Stay Informed, Stay Brief</div>', unsafe_allow_html=True)
 
-    clientId = "Z9cEMfO3ejpW966IB6ISKlHDWAU3aKA5" #st.secrets["clientId"]
-    domain = "dev-btdcd2ttscxcsa6a.us.auth0.com" #st.secrets["domain"]
+    client_id = st.secrets["auth0_client_id"]
+    domain = st.secrets["auth0_domain"]
 
-    user_info = login_button(clientId, domain=domain)
+    user_info = login_button(client_id=client_id, domain=domain)
     
     if user_info:
         st.sidebar.success(f"Logged in as {user_info['name']}")
+        if st.sidebar.button("View Bookmarked Articles"):
+            bookmarks = get_bookmarked_articles(user_info)
+            st.write("## Bookmarked Articles")
+            for article in bookmarks:
+                display_article(article, "bookmarked", 0, 0, user_info)
     else:
         st.sidebar.info("Please log in to access more features.")
 
     if selected_category == "All":
         st.info("Please select a specific category to view news.")
     else:
-        display_news_for_category(selected_category)
+        display_news_for_category(selected_category, user_info)
 
     st.markdown('<div class="footer">Powered by BriefNow</div>', unsafe_allow_html=True)
 

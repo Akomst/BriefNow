@@ -8,7 +8,7 @@ from config import rss_feeds, category_feeds
 import os
 
 # Login to Hugging Face
-api_key = os.getenv('api_key')
+api_key = st.secrets["huggingface_api_key"]
 login(token = api_key, add_to_git_credential=True ) 
 
 # Load the model and tokenizer once
