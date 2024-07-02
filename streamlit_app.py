@@ -135,7 +135,7 @@ MONGO_URI = f"mongodb+srv://{username}:{password}@cluster0.l1n4uzh.mongodb.net/?
 
 # Connect to MongoDB
 ca = certifi.where()
-client = pymongo.MongoClient(MONGO_URI, tlsCAFile=ca)
+client = MongoClient(MONGO_URI, tlsCAFile=ca)
 db = client["BriefNow"]
 bookmarks_collection = db["bookmarks"]
 
