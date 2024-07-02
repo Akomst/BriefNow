@@ -6,6 +6,6 @@ requests==2.31.0
 huggingface_hub==0.22.2
 optimum[onnxruntime]==1.18.1
 beautifulsoup4==4.12.2
-streamlit-auth0-component
 streamlit-auth0
 pymongo
+certifi

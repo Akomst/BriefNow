@@ -3,6 +3,7 @@ from streamlit_auth0 import login_button
 from news_fetcher import get_articles_for_source, get_sources_for_category, generate_summary, categories
 from pymongo import MongoClient
 from scraper import cached_scrape
+import certifi
 
 # Set page config at the very beginning
 st.set_page_config(page_title="BriefNow", layout="wide")
@@ -133,7 +134,8 @@ password = st.secrets["mongodb_password"]
 MONGO_URI = f"mongodb+srv://{username}:{password}@cluster0.l1n4uzh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 # Connect to MongoDB
-client = MongoClient(MONGO_URI)
+ca = certifi.where()
+client = pymongo.MongoClient(MONGO_URI, tlsCAFile=ca)
 db = client["BriefNow"]
 bookmarks_collection = db["bookmarks"]
 
