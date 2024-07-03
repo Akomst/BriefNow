@@ -3,7 +3,6 @@
 # Mapping RSS feed URLs
 rss_feeds = {
     "BBC": "http://feeds.bbci.co.uk/news/rss.xml",
-    "CNN": "http://rss.cnn.com/rss/edition.rss",
     "Reuters": "http://feeds.reuters.com/reuters/topNews",
     "Guardian": "https://www.theguardian.com/world/rss",
     "Al Jazeera": "https://www.aljazeera.com/xml/rss/all.xml",
@@ -16,8 +15,6 @@ rss_feeds = {
     "Tribune": "https://tribuneonlineng.com/feed/",
     "DailyNigeria": "https://dailynigerian.com/feed/",
     "The Herald": "https://www.herald.ng/feed/",
-    "The Gazette": "https://thegazettengr.com/feed/",
-    "Vanguard": "https://www.vanguardngr.com/feed/",
     "The Nation": "https://thenationonlineng.net/feed",
     "Sahara Reporters": "https://saharareporters.com/articles/rss-feed",
     "Yahoo": "http://rss.news.yahoo.com/rss/world",
@@ -28,12 +25,10 @@ rss_feeds = {
     "Harvard Business Review": "http://feeds.hbr.org/harvardbusiness",
     "TechCrunch":"https://techcrunch.com/feed/",
     "VentureBeat":"http://feeds.feedburner.com/venturebeat/SZYF", 
-    "Forbes Business": "https://www.forbes.com/business/feed/",
     "Scientific America": "http://rss.sciam.com/ScientificAmerican-Global",
     "BusinessDay NG": "https://businessday.ng/feed/",
     "PT Business": "https://www.premiumtimesng.com/category/business/feed",
     "TheNation Business": "https://thenationonlineng.net/category/business/feed/",
-    "Vanguard Business": "https://www.vanguardngr.com/category/business/feed/",
     "TechCabal": "https://techcabal.com/feed/"
 }
 
@@ -49,8 +44,6 @@ category_feeds = {
       "Tribune",
       "DailyNigeria", 
       "The Herald",
-      "The Gazette",
-      "Vanguard", 
       "The Nation",
       "Sahara Reporters"],
       
@@ -58,7 +51,6 @@ category_feeds = {
     "Al Jazeera", 
     "BBC", 
     "Yahoo",
-    "CNN", 
     "Guardian", 
     "New York Times"],
     
@@ -68,12 +60,10 @@ category_feeds = {
     
     "Business News":[
     "BusinessDay NG",
-    "Vanguard Business",
     "TheNation Business",
     "PT Business", 
     "Business Insider",
-    "Harvard Business Review",
-    "Forbes Business"
+    "Harvard Business Review"
     ],
     
     "Science and Technology":[
