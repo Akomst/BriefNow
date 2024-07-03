@@ -80,7 +80,7 @@ category_feeds = {
     "Science and Technology":[
     "MIT Tech Review",
     "TechCrunch", 
-    "TechCabal"
+    "TechCabal",
     "VentureBeat",
     "Wired",
     "Scientific America"
