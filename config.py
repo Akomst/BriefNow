@@ -29,7 +29,6 @@ rss_feeds = {
     "TechCrunch":"https://techcrunch.com/feed/",
     "VentureBeat":"http://feeds.feedburner.com/venturebeat/SZYF", 
     "Forbes Business": "https://www.forbes.com/business/feed/",
-    "Wired":"http://feeds.wired.com/wiredscience",
     "Scientific America": "http://rss.sciam.com/ScientificAmerican-Global",
     "BusinessDay NG": "https://businessday.ng/feed/",
     "PT Business": "https://www.premiumtimesng.com/category/business/feed",
@@ -70,8 +69,8 @@ category_feeds = {
     "Business News":[
     "BusinessDay NG",
     "Vanguard Business",
-    "TheNation Business ",
-    "PT Business ", 
+    "TheNation Business",
+    "PT Business", 
     "Business Insider",
     "Harvard Business Review",
     "Forbes Business"
@@ -82,7 +81,6 @@ category_feeds = {
     "TechCrunch", 
     "TechCabal",
     "VentureBeat",
-    "Wired",
     "Scientific America"
     ]
     
