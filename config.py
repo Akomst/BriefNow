@@ -69,8 +69,8 @@ category_feeds = {
     
     "Business News":[
     "BusinessDay NG",
-    "Vanguard Business"
-    "TheNation Business "
+    "Vanguard Business",
+    "TheNation Business ",
     "PT Business ", 
     "Business Insider",
     "Harvard Business Review",
