@@ -18,8 +18,9 @@ rss_feeds = {
     "The Nation": "https://thenationonlineng.net/feed",
     "Sahara Reporters": "https://saharareporters.com/articles/rss-feed",
     "Yahoo": "http://rss.news.yahoo.com/rss/world",
-    "BBC India":"http://feeds.bbci.co.uk/news/world/asia/india/rss.xml ",
-    "The Hindu": "http://www.thehindu.com/news/national/?service=rss",
+    "Football Critics":"https://www.footballcritic.com/rss/",
+    "e360hub": "https://www.e360hubs.com/feeds/posts/default?alt=rss",
+    "Sporting News": "https://www.sportingnews.com/us/rss",
     "Business Insider": "https://feeds.businessinsider.com/custom/all",
     "MIT Tech Review": "https://www.technologyreview.com/feed/",
     "Harvard Business Review": "http://feeds.hbr.org/harvardbusiness",
@@ -54,9 +55,10 @@ category_feeds = {
     "Guardian", 
     "New York Times"],
     
-    "India News": [
-    "BBC India", 
-    "The Hindu"],
+    "Sport News": [
+    "Football Critics", 
+    "Sporting News",
+    "e360hub"],
     
     "Business News":[
     "BusinessDay NG",
